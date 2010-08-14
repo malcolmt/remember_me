@@ -1,0 +1,6 @@
+Scripts and support files for setting up dev environment. Assumes dev machine has pip and virtualenv installed.
+
+Run it as "./create.sh <dirname>" where <dirname> is the name of the virtualenv directory (doesn't have to exist initially).
+
+TODO: Check out a copy of the final project inside the virtualenv as well. (Not needed during initial development.)
+
