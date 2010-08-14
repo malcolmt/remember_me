@@ -1,15 +1,25 @@
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+# Mostly used to control things like static file serving options.
+DEV_MODE = True
 
 ADMINS = (
 )
 
 MANAGERS = ADMINS
 
+# Directory location of the settings file. Useful when needing absolute file
+# paths that are in a known location relative to settings.
+FILE_ROOT = os.path.abspath(os.path.join(os.path.realpath(
+    os.path.dirname(__file__))))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'main_db.sqlite',
+        'NAME': os.path.join(FILE_ROOT, 'main_db.sqlite'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -17,27 +27,12 @@ DATABASES = {
     }
 }
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
 TIME_ZONE = 'Australia/Sydney'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = True
-
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale
 USE_L10N = True
 
 # Absolute path to the directory that holds media.
@@ -74,6 +69,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'remember_me_urls'
 
 TEMPLATE_DIRS = (
+# XXX: Needed eventually when I factor templates into base + content.
+#    os.path.join(FILE_ROOT, "templates"),
 )
 
 INSTALLED_APPS = (
