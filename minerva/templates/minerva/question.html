@@ -18,12 +18,11 @@
 
            <div id="content">
                <form>
-                   <p><strong>Question:</strong> Which of the following is the <em>English</em> meaning of <span class="ideograph">爱</span>?</p>
+                   <p><strong>Question:</strong> {{ question }}</p>               
                    <ul>
-                       <li><input type="radio" name="qn" value="a1" />love</li>
-                       <li><input type="radio" name="qn" value="a2" />hate</li>
-                       <li><input type="radio" name="qn" value="a3" />bunny</li>
-                       <li><input type="radio" name="qn" value="a4" />giraffe</li>
+                       {% for answer in answers %}
+                           <li><input type="radio" name="qn" value="{{ answer }}" /><span>{{ answer }}</span></li>
+                       {% endfor %}
                    </ul>
                </form>
            </div><!-- #content-->
