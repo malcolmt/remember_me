@@ -3,8 +3,10 @@ import datetime
 import gzip
 import json
 import os
+
 from south.db import db
 from south.v2 import DataMigration
+from django.core import serializers
 
 class Migration(DataMigration):
 
@@ -13,7 +15,7 @@ class Migration(DataMigration):
         # saving (avoids conflict with existing data).
         import minerva
         base = os.path.dirname(minerva.__file__)
-        fixture = os.path.join(base, "fixtures/zho_data.json.gz")
+        fixture = os.path.join(base, "fixtures/jpn_data.json.gz")
         data = json.loads(gzip.open(fixture).read())
         for elt in data:
             assert elt["model"] == "minerva.word", elt
@@ -21,7 +23,8 @@ class Migration(DataMigration):
             orm.Word(**obj_data).save(force_insert=True)
 
     def backwards(self, orm):
-        orm.Word.objects.filter(language="zho").delete()
+        orm.Word.objects.filter(language="jpn").delete()
+
 
     models = {
         'auth.group': {
