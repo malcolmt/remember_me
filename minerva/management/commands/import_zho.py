@@ -3,7 +3,7 @@ import os
 from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
-from minerva import models
+from minerva.models import Word
 
 FIELD_NAMES = (
     "level_id",
@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
     def handle(self, filename='', *args, **options):
         
-        existing = set(models.Word.objects.filter(language="zho").values_list("word", flat=True))
+        existing = set(Word.objects.filter(language="zho").values_list("word", flat=True))
         if args or not filename:
             raise CommandError('Usage is cz %s' % self.args)
         os.path.join(os.getcwd(), filename)
@@ -34,7 +34,7 @@ class Command(BaseCommand):
             if entry["simplified_character"].decode("utf-8") in existing:
                 # Avoiding importing the same character twice
                 continue
-            item = models.Word.objects.create(
+            item = Word.objects.create(
                 word=entry["simplified_character"],
                 meaning=entry["english"],
                 level=entry["level_id"],
