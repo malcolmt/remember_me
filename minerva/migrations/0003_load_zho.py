@@ -1,14 +1,24 @@
 # encoding: utf-8
 import datetime
+import gzip
+import json
+import os
 from south.db import db
 from south.v2 import DataMigration
-from django.db import models
-from django.core.management import call_command
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        call_command("loaddata", "zho_data.json.gz")
+        # Load json fixture manually so that we can create new pk value before
+        # saving (avoids conflict with existing data).
+        import minerva
+        base = os.path.dirname(minerva.__file__)
+        fixture = os.path.join(base, "fixtures/zho_data.json.gz")
+        data = json.loads(gzip.open(fixture).read())
+        for elt in data:
+            assert elt["model"] == "minerva.word", elt
+            obj_data = dict([(str(k), v) for k, v in elt["fields"].items()])
+            orm.Word(**obj_data).save(force_insert=True)
 
     def backwards(self, orm):
         orm.Word.objects.filter(language="zho").delete()
