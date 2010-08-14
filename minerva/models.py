@@ -1,6 +1,8 @@
 from django.contrib.auth import models as auth_models
 from django.db import models
 
+# pylint: disable-msg=E1101,W0232
+
 class WordManager(models.Manager):
     def get_by_natural_key(self, word, language):
         return self.get(word=word, language=language)

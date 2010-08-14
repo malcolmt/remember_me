@@ -18,9 +18,9 @@ def create_question(user, language, level):
     performance at all). Eventually, it will be a graded selection based on
     what the user finds difficult, etc.
     """
-    # FIXME - maybe sanity check language
     # FIXME: Cache this, for each language.
-    pks = Word.objects.filter(language=language, level=level).values_list("pk", flat=True)
+    pks = Word.objects.filter(language=language, level=level). \
+            values_list("pk", flat=True)
     sampled_words = Word.objects.filter(pk__in=random.sample(pks, 4))
     question_attribute, answer_attribute = random.choice(QUESTION_SCENARIOS)
     question = getattr(sampled_words[0], question_attribute)
