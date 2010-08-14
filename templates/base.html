@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{% block title %}Minerva{% endblock %}</title>
+        <link rel="stylesheet" href="static/css/style.layout.css" type="text/css" media="screen, projection" />
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                {% block header %}
+                <h1>Minerva: Foreign language vocabulary training</h1>
+                <div class="login">
+                    <p><a href="#">Login</a></p>
+                </div>&nbsp;
+                {% endblock %}
+            </div>
+
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div><!-- #content -->
+
+            <div id="footer">
+               <strong>Footer:</strong> FIXME
+            </div><!-- #footer -->
+        </div><!-- #wrapper -->
+    </body>
+</html>
+
+{# vim: set ts=4 et syn=htmldjango: #}
+

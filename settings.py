@@ -67,8 +67,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'remember_me_urls'
 
 TEMPLATE_DIRS = (
-# XXX: Needed eventually when I factor templates into base + content.
-#    os.path.join(FILE_ROOT, "templates"),
+    os.path.join(FILE_ROOT, "templates"),
 )
 
 INSTALLED_APPS = (
