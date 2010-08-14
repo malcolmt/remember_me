@@ -84,5 +84,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admindocs',
     'django.contrib.admin',
+    'south',
+    'minerva',
 )
 
