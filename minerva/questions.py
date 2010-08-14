@@ -18,13 +18,6 @@ def create_question(user, language, level):
 
     question_attribute, answer_attribute = random.choice(QUESTION_SCENARIOS)
 
-    if random.random() * 2 > 1:
-        question_attribute = 'word'
-        answer_attribute = 'meaning'
-    else:
-        question_attribute = 'meaning'
-        answer_attribute =  'word'
-
     question = sampled_words[0].__getattribute__(question_attribute)
     answers = [i.__getattribute__(answer_attribute) for i in sampled_words]
 
