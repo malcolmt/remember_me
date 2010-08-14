@@ -32,6 +32,9 @@ class Progress(models.Model):
     correct = models.IntegerField(default=0)
     attempts = models.PositiveIntegerField()
 
+    class Meta:
+        verbose_name_plural = "progress"
+
     def __unicode__(self):
         return u"%s: %s => %d / %d" % (self.person, self.word, self.correct,
                 self.attempts)
