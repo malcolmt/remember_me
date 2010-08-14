@@ -30,8 +30,6 @@ DATABASES = {
 TIME_ZONE = 'Australia/Sydney'
 LANGUAGE_CODE = 'en-us'
 
-SITE_ID = 1
-
 USE_I18N = True
 USE_L10N = True
 
@@ -77,7 +75,6 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admindocs',
     'django.contrib.admin',
