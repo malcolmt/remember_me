@@ -7,6 +7,9 @@ class Word(models.Model):
     level = models.PositiveIntegerField()
     language = models.CharField(max_length=3)
 
+    class Meta:
+        unique_together = ("word", "language")
+
     def __unicode__(self):
         return u"%s (%s)" % (self.word, self.meaning)
 
