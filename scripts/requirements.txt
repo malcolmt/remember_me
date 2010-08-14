@@ -1,4 +1,5 @@
 django
 south
 django_debug_toolbar
+BeautifulSoup
 
