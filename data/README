@@ -1,0 +1,11 @@
+This directory contains the raw data files used to initially populate our word lists. The importers for this data are custom management commands in the minerva application.
+
+hsk.csv:
+    - Chinese word list in four difficulty levels.
+    - Source is http://hskflashcards.com/download.php
+
+joyo-kanji.html:
+    - The 1945 basic Japanese words, graded for school grades 1 through 6 and
+      secondary school ("S" in this list, 7 in our system).
+    - Source is http://en.wikipedia.org/wiki/List_of_j%C5%8Dy%C5%8D_kanji
+
