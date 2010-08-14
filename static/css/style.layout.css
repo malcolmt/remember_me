@@ -14,6 +14,7 @@ a {
 a:hover {
 	text-decoration: none;
 }
+
 p {
 	margin: 0 0 18px
 }
@@ -28,26 +29,50 @@ input {
 	margin: 0 auto;
 }
 
+.ideograph {
+    font-size: 1.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
 
 /* Header
 -----------------------------------------------------------------------------*/
 #header {
-	height: 150px;
+   padding-top: 2em;
+   padding-bottom: 1em;
 	background: #FFE680;
+   text-align: center;
+}
+
+.login {
+    float: right;
+    padding-right: 1em;
 }
 
 
 /* Middle
 -----------------------------------------------------------------------------*/
 #content {
+    margin: 1em 1em 2em 1em;
 }
 
+#content ul {
+    padding-left: 5em;
+}
 
+#content li {
+    list-style: none;
+}
 
+#content input {
+    margin-right: 1em;
+}
 
 /* Footer
 -----------------------------------------------------------------------------*/
 #footer {
-	height: 100px;
+   padding-top: 1em;
+   padding-bottom: 1em;
 	background: #BFF08E;
 }
