@@ -1,7 +1,7 @@
 import os
 
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import *  # pylint: disable-msg=W0401,W0614
 from django.contrib import admin
 from django.views.static import serve
 
