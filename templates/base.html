@@ -20,7 +20,7 @@
                 <p>Hello {{ user }} | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a> |
                 <a href="{% url logout %}">Logout</a></p>
                 {% else %}
-                <p><a id="login-link" href="{% url login %}">Login</a> | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a></p>
+                <p><a id="login-link" href="{% url login %}">Login / Join</a> | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a></p>
                 {% login_form %}
                 {% endif %}
                 </div>&nbsp;

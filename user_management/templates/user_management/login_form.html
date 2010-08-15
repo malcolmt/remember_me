@@ -1,4 +1,5 @@
 <form id="login-form" {% if hidden %}class="hidden"{% endif %} action="{% url login %}" method="post">
+    <p><a href="{% url signup %}">Sign up as a new user</a></p>
     {% csrf_token %}
     <table>
         {{ form }}
