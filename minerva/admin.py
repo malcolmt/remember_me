@@ -4,8 +4,8 @@ from minerva import models
 
 
 class WordAdmin(admin.ModelAdmin):
-    list_display = ("word", "meaning", "level", "sub_level", "language")
-    list_filter = ["language"]
+    list_display = ("word", "meaning", "level", "sub_level", "lang_code")
+    list_filter = ["lang_code"]
 
 class ProgressAdmin(admin.ModelAdmin):
     list_display = ("student_string", "word", "correct", "attempts")
@@ -19,4 +19,5 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(models.Word, WordAdmin)
 admin.site.register(models.Progress, ProgressAdmin)
 admin.site.register(models.UserProfile, UserProfileAdmin)
+admin.site.register(models.Language)
 

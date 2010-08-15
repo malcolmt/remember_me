@@ -5,9 +5,19 @@ from minerva import signal_handlers
 
 # pylint: disable-msg=E1101,W0232
 
+class Language(models.Model):
+    """
+    A language supported by this application.
+    """
+    code = models.CharField(max_length=3)
+    descriptive_name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return u"%s (%s)" % (self.descriptive_name, self.code)
+
 class WordManager(models.Manager):
-    def get_by_natural_key(self, word, language):
-        return self.get(word=word, language=language)
+    def get_by_natural_key(self, word, code):
+        return self.get(word=word, lang_code__code=code)
 
 class Word(models.Model):
     """
@@ -17,18 +27,18 @@ class Word(models.Model):
     meaning = models.TextField()
     level = models.PositiveIntegerField()
     sub_level = models.PositiveIntegerField(blank=True, null=True)
-    language = models.CharField(max_length=3)
+    lang_code = models.ForeignKey(Language)
 
     objects = WordManager()
 
     class Meta:
-        unique_together = ("word", "language")
+        unique_together = ("word", "lang_code")
 
     def __unicode__(self):
         return u"%s (%s)" % (self.word, self.meaning)
 
     def natural_key(self):
-        return (self.word, self.language)
+        return (self.word, self.lang_code.code)
 
 
 class Progress(models.Model):

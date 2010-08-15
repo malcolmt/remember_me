@@ -24,7 +24,7 @@ def create_question(user, language, level, num_choices=4):
     # based on what the user finds difficult, etc.
 
     # FIXME: Cache this, for each language.
-    pks = Word.objects.filter(language=language, level=level). \
+    pks = Word.objects.filter(lang_code__code=language, level=level). \
             values_list("pk", flat=True)
     sampled_words = list(Word.objects.filter(pk__in=random.sample(pks,
             num_choices)))
