@@ -35,13 +35,13 @@ class Progress(models.Model):
             help_text="Anonymous user progress is tracked using their session.")
     word = models.ForeignKey(Word)
     correct = models.IntegerField(default=0)
-    attempts = models.PositiveIntegerField()
+    attempts = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name_plural = "progress"
 
     def __unicode__(self):
-        return u"%s: %s => %d / %d" % (self.person, self.word, self.correct,
+        return u"%s,%s: %s => %d / %d" % (self.student, self.anon_student, self.word, self.correct,
                 self.attempts)
 
     def is_anonymous(self):

@@ -1,5 +1,6 @@
 import random
 
+from django.conf import settings
 from minerva.models import Word
 
 QUESTION_SCENARIOS = (
@@ -24,6 +25,6 @@ def create_question(user, language, level):
     sampled_words = Word.objects.filter(pk__in=random.sample(pks, 4))
     question_attribute, answer_attribute = random.choice(QUESTION_SCENARIOS)
     question = getattr(sampled_words[0], question_attribute)
-    answers = [(getattr(item, "pk"), getattr(item, answer_attribute)) for item in sampled_words]
+    answers = [(item.pk, getattr(item, answer_attribute)) for item in sampled_words]
 
     return question, answers
