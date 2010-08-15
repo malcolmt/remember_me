@@ -12,6 +12,7 @@ class Word(models.Model):
     word = models.CharField(max_length=50)
     meaning = models.TextField()
     level = models.PositiveIntegerField()
+    sub_level = models.PositiveIntegerField(blank=True, null=True)
     language = models.CharField(max_length=3)
 
     objects = WordManager()

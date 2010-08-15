@@ -3,6 +3,7 @@ Import the standard Japanese vocabulary list.
 """
 
 import os
+from optparse import make_option
 
 from django.core.management import base
 from BeautifulSoup import BeautifulSoup
@@ -22,19 +23,27 @@ class Command(base.BaseCommand):
         verbosity = int(options.get("verbosity", 0))
         source_file = os.path.join(os.getcwd(), args[0])
         soup = BeautifulSoup(open(source_file).read())
-        existing = set(models.Word.objects.filter(language=LANG_CODE). \
-                values_list("word", flat=True))
+        old_data = models.Word.objects.filter(language=LANG_CODE). \
+                values_list("word", "level", "sub_level", "id")
+        existing = dict([(elt[0], elt[1:]) for elt in old_data])
         for row in soup.findAll("tr"):
             pos = row.td.findNextSiblings("td")
             word = pos[0].string.strip()
-            if word in existing:
-                continue
+            strokes = int(pos[3].string)
             level = pos[4].string.strip()
             if level == "S":
                 level = 7
             else:
                 level = int(level)
+            data = existing.get(word)
+            if data:
+                if data[0] == level and data[1] == strokes:
+                    continue
+                else:
+                    pk = data[2]
+            else:
+                pk = None
             meaning = pos[5].string.strip()
-            models.Word(word=word, level=level, meaning=meaning,
-                    language=LANG_CODE).save()
+            models.Word(id=pk, word=word, level=level, sub_level=strokes,
+                    meaning=meaning, language=LANG_CODE).save()
 
