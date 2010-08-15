@@ -30,8 +30,9 @@ DATABASES = {
 TIME_ZONE = 'Australia/Sydney'
 LANGUAGE_CODE = 'en-us'
 
-USE_I18N = True
-USE_L10N = True
+# Disabled for now; no i18n support available yet.
+USE_I18N = False
+USE_L10N = False
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -68,6 +69,12 @@ ROOT_URLCONF = 'remember_me_urls'
 
 TEMPLATE_DIRS = (
     os.path.join(FILE_ROOT, "templates"),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+        "django.contrib.auth.context_processors.auth",
+        "django.core.context_processors.debug",
+        "django.core.context_processors.media",
 )
 
 INSTALLED_APPS = (
