@@ -13,7 +13,7 @@
                 <h1>Minerva: Foreign language vocabulary training</h1>
                 <div class="tools">
                 {% if user.is_authenticated %}
-                <p>Hello {{ user }} | <a href="{% url stats %}">Statistics</a> |
+                <p>Hello {{ user }} | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Statistics</a> |
                 <a href="{% url logout %}">Logout</a></p>
                 {% else %}
                 <p id="login"><a href="{% url login %}">Login</a></p>
