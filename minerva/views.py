@@ -39,7 +39,7 @@ def validate_answer(request):
     if request.user.is_authenticated():
         query['student'] = request.user
     else:
-        query['anon_student'] = request.user
+        query['anon_student'] = request.session.session_key
     
     progress = Progress.objects.filter(**query)
     if not progress:
@@ -50,19 +50,15 @@ def validate_answer(request):
     progress.attempts += 1
     progress.correct += 1
     progress.save()
-    #if selected_answer != correct_answer:
-        
-
         
 def question(request):
     # TODO: Things needed -
     #   - a way to select a language.
-    #   - ...
-    problem, answers = create_question(None, "zho", 1)
-    meta = pack_question_meta_data(answers[0][0], [i[0] for i in answers])
     if request.method == 'POST':
         validate_answer(request)
         
+    problem, answers = create_question(None, "zho", 1)
+    meta = pack_question_meta_data(answers[0][0], [i[0] for i in answers])
     form = QuestionForm(answers = answers, meta = meta)
     return render_to_response('minerva/question.html', RequestContext(request, {
         'question': problem,

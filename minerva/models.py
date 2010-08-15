@@ -32,8 +32,8 @@ class Progress(models.Model):
     Tracking historical progress for a particular user on a word.
     """
     student = models.ForeignKey(a_models.User, null=True, blank=True)
-    anon_student = models.ForeignKey(s_models.Session, null=True, blank=True,
-            help_text="Anonymous user progress is tracked using their session.")
+    anon_student = models.CharField(max_length=32, null=True, blank=True,
+            help_text="Anonymous user progress is tracked using their session key.")
     word = models.ForeignKey(Word)
     correct = models.IntegerField(default=0)
     attempts = models.PositiveIntegerField(default=0)
