@@ -14,8 +14,8 @@ function cancel_login() {
 
 function login_setup() {
 	$("#login-link").click(show_login_form);
-	$("#login-form input").click(hide_login_form);
-    $("#login-cancel").click(cancel_login);
+	$("#login-form input[type=submit]").click(hide_login_form);
+	$("#login-cancel").click(cancel_login);
 }
 
 $(login_setup);

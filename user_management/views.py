@@ -26,3 +26,4 @@ def create_user(request):
     }
     return render_to_response('user_management/create.html', context,
             RequestContext(request))
+
