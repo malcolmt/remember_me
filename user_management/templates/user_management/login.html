@@ -1,11 +1,7 @@
 {% extends "base.html" %}
+{% load auth_tags %}
 
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-    <table>
-    {{ form }}
-    <tr><td></td><td><input type="submit" value="Login" /></td></tr>
-    </table>
-</form>
+{% login_form "visible" %}
 {% endblock %}
 
