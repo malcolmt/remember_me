@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form>
+<form action="#" method="post">
     <p><strong>Question:</strong> {{ question }}</p>               
-    <ul>
-        {% for answer in answers %}
-            <li><input type="radio" name="qn" value="{{ answer }}" /><span>{{ answer }}</span></li>
-        {% endfor %}
-    </ul>
+    {{ form.answers.errors }}
+    {{ form.answers }}
+    <input type="submit" value="Submit" />
 </form>
 {% endblock %}
 
