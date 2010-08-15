@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if prev_word %}
+    {% if prev_result %}<p class="correct"><strong>Correct!</strong>
+    {% else %}<p class="incorrect"><strong>Incorrect:</strong>{% endif %}
+    {{ prev_word }} is <em>{{ prev_meaning }}</em>.</p>
+{% endif %}
+
 <form action="" method="post">
     {% csrf_token %}
     <p><strong>Question:</strong> {{ question }}</p>               
-    {{ errors }}
     {{ form.answer.errors }}
     {{ form.answer }}
     {{ form.meta.errors }}

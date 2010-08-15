@@ -39,6 +39,16 @@ input {
    display: none;
 }
 
+.correct {
+	padding: 0.5em;
+	border: 1px solid #00f;
+}
+
+.incorrect {
+	padding: 0.5em;
+	border: 1px solid #f00;
+}
+
 
 /* Header
 -----------------------------------------------------------------------------*/
