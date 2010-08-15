@@ -4,10 +4,10 @@
 <form action="#" method="post">
     {% csrf_token %}
     <p><strong>Question:</strong> {{ question }}</p>               
-    {{ form.answers.errors }}
-    {{ form.answers }}
-    {{ form.question_meta.errors }}
-    {{ form.question_meta }}
+    {{ form.answer.errors }}
+    {{ form.answer }}
+    {{ form.meta.errors }}
+    {{ form.meta }}
     <input type="submit" value="Submit" />
 </form>
 {% endblock %}
