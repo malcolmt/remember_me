@@ -8,7 +8,7 @@ class WordAdmin(admin.ModelAdmin):
     list_filter = ["language"]
 
 class ProgressAdmin(admin.ModelAdmin):
-    list_display = ("student", "word", "correct", "attempts")
+    list_display = ("student_string", "word", "correct", "attempts")
     # TODO: Make a column that is "correct / attempts" for readability.
     list_filter = ["student"]
 
