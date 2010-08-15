@@ -23,7 +23,8 @@ def validate_answer(request):
     
     progress, unused = Progress.objects.get_or_create(**query)
     progress.attempts += 1
-    progress.correct += 1
+    if int(form.cleaned_data['answer']) == (word.pk):
+        progress.correct += 1
     progress.save()
         
 def question(request):
