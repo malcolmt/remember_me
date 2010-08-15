@@ -6,7 +6,6 @@ from django.template import RequestContext
 from minerva.forms import UserProfileForm
 
 def create_user(request):
->>>>>>> 682ec4d6955a55ca02e446c146e15f7c7a5e2898
     if request.method == 'POST':
         user_create_form = UserCreationForm(request.POST)
         user_profile_form = UserProfileForm(request.POST)
@@ -24,3 +23,4 @@ def create_user(request):
     }
     return render_to_response('user_management/create.html', context,
             RequestContext(request))
+
