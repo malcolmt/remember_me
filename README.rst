@@ -76,10 +76,10 @@ Manual setup
 For those wanting to know what's going on in the setup phase, the requirements
 for this set of apps are
 
-    * Django 1.2.1
-    * django-south
-    * django-debug-toolbar
-    * BeautifulSoup (if recreating the Japanese vocab data)
+* Django 1.2.1
+* django-south
+* django-debug-toolbar
+* BeautifulSoup (if recreating the Japanese vocab data)
 
 If you already have those installed, there's nothing else that needs to be done.
 
