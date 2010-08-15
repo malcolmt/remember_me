@@ -89,3 +89,5 @@ INSTALLED_APPS = (
     'user_management',
 )
 
+LOGIN_REDIRECT_URL = "/"
+

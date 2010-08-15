@@ -4,9 +4,9 @@ from django.conf import settings
 from django.conf.urls.defaults import *  # pylint: disable-msg=W0401,W0614
 from django.contrib import admin
 from django.views.static import serve
-from django.views.generic.simple import direct_to_template
 
 import minerva.urls
+import user_management.urls
 
 admin.autodiscover()
 
@@ -15,10 +15,7 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'', include(minerva.urls)),
-    url("login/$", direct_to_template,
-        {"template": "fixme_placeholder.html"}, name="login"),
-    url("logout/$", direct_to_template,
-        {"template": "fixme_placeholder.html"}, name="logout"),
+    (r'', include(user_management.urls)),
 )
 
 if settings.DEV_MODE:
