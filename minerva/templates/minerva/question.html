@@ -4,6 +4,7 @@
 <form action="" method="post">
     {% csrf_token %}
     <p><strong>Question:</strong> {{ question }}</p>               
+    {{ errors }}
     {{ form.answer.errors }}
     {{ form.answer }}
     {{ form.meta.errors }}
