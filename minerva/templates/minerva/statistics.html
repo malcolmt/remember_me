@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table summary="This table displays how many times you have successfully identified this word">
+<tr>
+<th>Word</th>
+<th>Meaning</th>
+<th># Attempted</th>
+<th># Successful</th>
+</tr>
+{% for progress_item in progress %}
+<tr>
+<td>{{progress_item.word.word}}</td>
+<td>{{progress_item.word.meaning}}</td>
+<td>{{progress_item.attempts}}</td>
+<td>{{progress_item.correct}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
+
+{# vim: set ts=4 et syn=htmldjango: #}

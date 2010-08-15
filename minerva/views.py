@@ -49,6 +49,13 @@ def question(request):
     form = QuestionForm(question=problem, answers = answers)
     context['question'] = problem[1]
     context['form'] = form
-    return render_to_response('minerva/question.html', context,
-            RequestContext(request))
+    return render_to_response('minerva/question.html', context, RequestContext(request))
 
+def statistics(request):
+    context = {}
+    if request.user.is_authenticated():
+        progress = Progress.objects.filter(student=request.user)
+    else:
+        progress = Progress.objects.filter(anon_student=request.session.session_key)
+    context['progress'] = progress
+    return render_to_response('minerva/statistics.html', context, RequestContext(request))

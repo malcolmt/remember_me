@@ -4,7 +4,7 @@ from minerva import models
 
 
 class WordAdmin(admin.ModelAdmin):
-    list_display = ("word", "meaning", "level", "language")
+    list_display = ("word", "meaning", "level", "sub_level", "language")
     list_filter = ["language"]
 
 class ProgressAdmin(admin.ModelAdmin):
