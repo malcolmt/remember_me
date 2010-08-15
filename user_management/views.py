@@ -3,16 +3,24 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from minerva.forms import UserProfileForm
+
 def create_user(request):
+>>>>>>> 682ec4d6955a55ca02e446c146e15f7c7a5e2898
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        user_create_form = UserCreationForm(request.POST)
+        user_profile_form = UserProfileForm(request.POST)
+        if user_create_form.is_valid():
+            user_create_form.save()
+            if user_profile_form.is_valid():
+                user_profile_form.save()
             return HttpResponseRedirect('/login/')
     else:
-        form = UserCreationForm()
+        user_create_form = UserCreationForm()
+        user_profile_form = UserProfileForm()
     context = {
-        'form': form,
+        'user_create_form': user_create_form,
+        'user_profile_form': user_profile_form
     }
     return render_to_response('user_management/create.html', context,
             RequestContext(request))

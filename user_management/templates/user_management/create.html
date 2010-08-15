@@ -3,7 +3,8 @@
 {% block content %}
 <form action="" method="post">{% csrf_token %}
     <table>
-    {{ form }}
+    {{ user_create_form }}
+    {{ user_profile_form }}
     <tr><td></td><td><input type="submit" value="Create User" /></td></tr>
     </table>
 </form>
