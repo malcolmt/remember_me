@@ -53,4 +53,5 @@ class Progress(models.Model):
             return u"Anon: %s" % self.anon_student
         else:
             return unicode(self.student)
+    student_string.short_description = "student"
 
