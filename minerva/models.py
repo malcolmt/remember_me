@@ -1,4 +1,5 @@
-from django.contrib.auth import models as auth_models
+from django.contrib.auth import models as a_models
+from django.contrib.sessions import models as s_models
 from django.db import models
 
 # pylint: disable-msg=E1101,W0232
@@ -29,7 +30,9 @@ class Progress(models.Model):
     """
     Tracking historical progress for a particular user on a word.
     """
-    student = models.ForeignKey(auth_models.User)
+    student = models.ForeignKey(a_models.User, null=True, blank=True)
+    anon_student = models.ForeignKey(s_models.Session, null=True, blank=True,
+            help_text="Anonymous user progress is tracked using their session.")
     word = models.ForeignKey(Word)
     correct = models.IntegerField(default=0)
     attempts = models.PositiveIntegerField()
@@ -40,4 +43,7 @@ class Progress(models.Model):
     def __unicode__(self):
         return u"%s: %s => %d / %d" % (self.person, self.word, self.correct,
                 self.attempts)
+
+    def is_anonymous(self):
+        return self.anon_student is not None
 
