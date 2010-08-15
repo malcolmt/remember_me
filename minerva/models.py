@@ -42,13 +42,16 @@ class Progress(models.Model):
         verbose_name_plural = "progress"
 
     def __unicode__(self):
-        if self.is_anonymous():
-            person = "Anon: %d" % self.anon_student
-        else:
-            person = self.student
-        return u"%s: %s => %d / %d" % (person, self.word, self.correct,
-                self.attempts)
+        return u"%s: %s => %s / %d" % (self.student_string(), self.word,
+                self.correct, self.attempts)
 
     def is_anonymous(self):
         return self.anon_student is not None
+
+    def student_string(self):
+        if self.is_anonymous():
+            return u"Anon: %s" % self.anon_student
+        else:
+            return unicode(self.student)
+    student_string.short_description = "student"
 
