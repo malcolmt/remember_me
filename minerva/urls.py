@@ -5,8 +5,8 @@ from minerva import views
 
 
 urlpatterns = patterns('',
-    url(r'^/$', views.question),
+    url(r'^$', views.question, name="question-page"),
     url("test/$", direct_to_template,
-        {"template": "minerva/test_display.html"}),
+        {"template": "minerva/test_display.html"}, name="test-page"),
 )
 
