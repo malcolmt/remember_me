@@ -53,9 +53,11 @@ def question(request):
 
 def statistics(request):
     context = {}
+    query = {}
     if request.user.is_authenticated():
-        progress = Progress.objects.filter(student=request.user)
+        query['student'] = request.user
     else:
-        progress = Progress.objects.filter(anon_student=request.session.session_key)
+        query['anon_student'] = request.session.session_key
+    progress = Progress.objects.filter(**query).order_by('correct').reverse()
     context['progress'] = progress
     return render_to_response('minerva/statistics.html', context, RequestContext(request))
