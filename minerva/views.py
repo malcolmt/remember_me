@@ -19,15 +19,12 @@ def validate_answer(request):
     if request.user.is_authenticated():
         query['student'] = request.user
     else:
-        query['anon_student'] = request.user
+        query['anon_student'] = request.session.session_key
     
     progress, unused = Progress.objects.get_or_create(**query)
     progress.attempts += 1
     progress.correct += 1
     progress.save()
-    #if selected_answer != correct_answer:
-        
-
         
 def question(request):
     if request.method == 'POST':
@@ -38,8 +35,11 @@ def question(request):
     #   - a way to select difficulty level.
     #   - ...
     problem, answers = create_question(None, "zho", 1)
-    form = QuestionForm(question=problem, answers=answers)
-    return render_to_response('minerva/question.html', RequestContext(request, {
+    form = QuestionForm(question=problem, answers = answers)
+    context = {
         'question': problem[1],
         'form': form,
-    }))
+        }
+    return render_to_response('minerva/question.html', context,
+            RequestContext(request))
+
