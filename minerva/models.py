@@ -9,6 +9,9 @@ class WordManager(models.Manager):
         return self.get(word=word, language=language)
 
 class Word(models.Model):
+    """
+    A logical word in a language that can be used in questions
+    """
     word = models.CharField(max_length=50)
     meaning = models.TextField()
     level = models.PositiveIntegerField()
@@ -55,3 +58,12 @@ class Progress(models.Model):
             return unicode(self.student)
     student_string.short_description = "student"
 
+class UserProfile(models.Model):
+    """
+    Tracking user specific settings
+    """
+    student = models.ForeignKey(a_models.User, null=False, blank=False, primary_key=True)
+    language = models.CharField(max_length=3)
+
+    def __unicode__(self):
+        return u"%s (%s)" % (unicode(self.student), self.language)
