@@ -13,6 +13,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'', include(minerva.urls)),
 )
 
 if settings.DEV_MODE:
@@ -20,9 +21,4 @@ if settings.DEV_MODE:
         (r'^static/(.*)$', serve,
                 {'document_root': os.path.join(settings.FILE_ROOT, "static/")}),
         )
-
-# This must come last due to its catch-all nature.
-urlpatterns += patterns("",
-    (r'^$', include(minerva.urls)),
-)
 
