@@ -1,11 +1,12 @@
-from django.shortcuts import render_to_response
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, Http404
 
 from minerva.forms import UserProfileForm
 
-def create(request):
+def create_user(request):
+>>>>>>> 682ec4d6955a55ca02e446c146e15f7c7a5e2898
     if request.method == 'POST':
         user_create_form = UserCreationForm(request.POST)
         user_profile_form = UserProfileForm(request.POST)
@@ -21,4 +22,5 @@ def create(request):
         'user_create_form': user_create_form,
         'user_profile_form': user_profile_form
     }
-    return render_to_response('user_management/create.html', context, RequestContext(request))
+    return render_to_response('user_management/create.html', context,
+            RequestContext(request))

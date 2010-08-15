@@ -1,6 +1,7 @@
 from django.contrib.auth import models as a_models
-from django.contrib.sessions import models as s_models
 from django.db import models
+
+from minerva import signal_handlers
 
 # pylint: disable-msg=E1101,W0232
 
@@ -36,7 +37,7 @@ class Progress(models.Model):
     """
     student = models.ForeignKey(a_models.User, null=True, blank=True)
     anon_student = models.CharField(max_length=32, null=True, blank=True,
-            help_text="Anonymous user progress is tracked using their session key.")
+            help_text="Anonymous users are tracked using their session key.")
     word = models.ForeignKey(Word)
     correct = models.IntegerField(default=0)
     attempts = models.PositiveIntegerField(default=0)
@@ -56,14 +57,18 @@ class Progress(models.Model):
             return u"Anon: %s" % self.anon_student
         else:
             return unicode(self.student)
-    student_string.short_description = "student"
+    student_string.short_description = "student" # pylint: disable-msg=W0612
 
 class UserProfile(models.Model):
     """
     Tracking user specific settings
     """
-    student = models.ForeignKey(a_models.User, null=False, blank=False, primary_key=True)
-    language = models.CharField(max_length=3)
+    student = models.OneToOneField(a_models.User, primary_key=True)
+    language = models.CharField(max_length=3, null=True, blank=True)
 
     def __unicode__(self):
-        return u"%s (%s)" % (unicode(self.student), self.language)
+        return u"%s (lang: %s)" % (self.student, self.language)
+
+models.signals.post_save.connect(signal_handlers.create_user_profile,
+        sender=a_models.User)
+

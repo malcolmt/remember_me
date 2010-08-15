@@ -35,7 +35,7 @@ input {
     padding-right: 0.5em;
 }
 
-#login-form {
+.hidden {
    display: none;
 }
 

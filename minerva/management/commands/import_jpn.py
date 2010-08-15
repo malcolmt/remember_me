@@ -3,7 +3,6 @@ Import the standard Japanese vocabulary list.
 """
 
 import os
-from optparse import make_option
 
 from django.core.management import base
 from BeautifulSoup import BeautifulSoup
@@ -20,7 +19,6 @@ class Command(base.BaseCommand):
         if len(args) != 1:
             raise base.CommandError("Usage is import_jpn %s" % self.args)
 
-        verbosity = int(options.get("verbosity", 0))
         source_file = os.path.join(os.getcwd(), args[0])
         soup = BeautifulSoup(open(source_file).read())
         old_data = models.Word.objects.filter(language=LANG_CODE). \
