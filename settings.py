@@ -86,5 +86,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'minerva',
+    'user_management',
 )
 
