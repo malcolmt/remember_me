@@ -1,6 +1,8 @@
 from django.contrib.auth import models as a_models
 from django.db import models
 
+from minerva import signal_handlers
+
 # pylint: disable-msg=E1101,W0232
 
 class WordManager(models.Manager):
@@ -66,4 +68,7 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return u"%s (lang: %s)" % (self.student, self.language)
+
+models.signals.post_save.connect(signal_handlers.create_user_profile,
+        sender=a_models.User)
 
