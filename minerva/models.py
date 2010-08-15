@@ -40,6 +40,17 @@ class Word(models.Model):
     def natural_key(self):
         return (self.word, self.lang_code.code)
 
+class SessionProgress(models.Model):
+    """
+    Track some state for the current session
+    """
+    student = models.ForeignKey(a_models.User, null=True, blank=True)
+    anon_student = models.CharField(max_length=32, null=True, blank=True,
+            help_text="Anonymous users are tracked using their session key.")
+    word = models.ForeignKey(Word)
+
+    weight = models.IntegerField(default=0) # default weight of zero, we should check out this word!!
+    correct = models.IntegerField(default=0)
 
 class Progress(models.Model):
     """
@@ -81,4 +92,3 @@ class UserProfile(models.Model):
 
 models.signals.post_save.connect(signal_handlers.create_user_profile,
         sender=a_models.User)
-

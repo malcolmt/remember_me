@@ -24,3 +24,6 @@ Result analysis
 
 New word selection
  - select word with lowest attempt value
+
+To Consider
+ - retire old state
