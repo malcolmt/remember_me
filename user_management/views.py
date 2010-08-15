@@ -1,9 +1,9 @@
-from django.shortcuts import render_to_response
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, Http404
 
-def create(request):
+def create_user(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -14,4 +14,5 @@ def create(request):
     context = {
         'form': form,
     }
-    return render_to_response('user_management/create.html', context, RequestContext(request))
+    return render_to_response('user_management/create.html', context,
+            RequestContext(request))
