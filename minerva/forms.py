@@ -1,4 +1,5 @@
 from django import forms as dj_forms
+from minerva.models import UserProfile, Word
 
 class QuestionForm(dj_forms.Form):
     meta = dj_forms.CharField(widget=dj_forms.HiddenInput)
@@ -39,3 +40,13 @@ class QuestionForm(dj_forms.Form):
         data = [int(i) for i in packed_data.split("|")]
         return data[0], data[1:]
 
+class UserProfileForm(dj_forms.ModelForm):
+    class Meta:
+        model=UserProfile
+        exclude = ('student', )
+
+    def clean_language(self):
+        data = self.cleaned_data['language']
+        if data not in Word.objects.all().values_list('language', flat=True).distinct():
+            raise dj_forms.ValidationError("language %s is not supported" % data)
+        return data
