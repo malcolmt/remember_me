@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="#" method="post">
+<form action="" method="post">
     {% csrf_token %}
     <p><strong>Question:</strong> {{ question }}</p>               
     {{ form.answer.errors }}
