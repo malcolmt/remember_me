@@ -1,2 +1,11 @@
-<form id="login-form" action="{% url login %}" method="post">{{ form }}</form>
+<form id="login-form" action="{% url login %}" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+        <tr><td></td>
+            <td><input type="submit" value="Login" />
+                <a id="login-cancel" href="{% url question-page %}">Cancel</a>
+            </td></tr>
+    </table>
+</form>
 
