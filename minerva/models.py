@@ -61,9 +61,9 @@ class UserProfile(models.Model):
     """
     Tracking user specific settings
     """
-    student = models.ForeignKey(a_models.User, null=False, blank=False,
-            primary_key=True)
-    language = models.CharField(max_length=3)
+    student = models.OneToOneField(a_models.User, primary_key=True)
+    language = models.CharField(max_length=3, null=True, blank=True)
 
     def __unicode__(self):
-        return u"%s (%s)" % (unicode(self.student), self.language)
+        return u"%s (lang: %s)" % (self.student, self.language)
+
