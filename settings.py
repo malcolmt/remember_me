@@ -1,5 +1,7 @@
 import os
 
+import utils
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -95,8 +97,9 @@ INSTALLED_APPS = (
 LOGIN_REDIRECT_URL = "/"
 AUTH_PROFILE_MODULE = "minerva.UserProfile"
 
-INTERNAL_IPS = ("127.0.0.1",)
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
+
+utils.load_external_settings("host_settings", globals())
 
