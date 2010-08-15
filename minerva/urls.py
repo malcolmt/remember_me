@@ -8,5 +8,7 @@ urlpatterns = patterns('',
     url(r'^$', views.question, name="question-page"),
     url("test/$", direct_to_template,
         {"template": "minerva/test_display.html"}, name="test-page"),
+    url("stats/$", direct_to_template,
+        {"template": "fixme_placeholder.html"}, name="stats"),
 )
 
