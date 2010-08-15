@@ -4,6 +4,10 @@
     <head>
         <title>{% block title %}Minerva{% endblock %}</title>
         <link rel="stylesheet" href="/static/css/style.layout.css" type="text/css" media="screen, projection" />
+        <link type="text/css" href="/static/css/smoothness/jquery-ui-1.8.4.custom.css" rel="stylesheet" /> 
+        <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/static/js/jquery-ui-1.8.4.custom.min.js"></script>
+        <script type="text/javascript" src="/static/js/login.js"></script>
     </head>
 
     <body>
@@ -16,7 +20,7 @@
                 <p>Hello {{ user }} | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a> |
                 <a href="{% url logout %}">Logout</a></p>
                 {% else %}
-                <p id="login"><a href="{% url login %}">Login</a> | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a></p>
+                <p><a id="login-link" href="{% url login %}">Login</a> | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a></p>
                 {% login_form %}
                 {% endif %}
                 </div>&nbsp;

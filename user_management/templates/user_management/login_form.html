@@ -1,2 +1,8 @@
-<form id="login-form" action="{% url login %}" method="post">{{ form }}</form>
+<form id="login-form" action="{% url login %}" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+        <tr><td></td><td><input type="submit" value="Login" /></td></tr>
+    </table>
+</form>
 
