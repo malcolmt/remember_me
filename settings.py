@@ -101,5 +101,8 @@ DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
+# Cache period, in seconds, for language data (which hardly ever changes)
+LANG_CACHE_TIMEOUT = 10800
+
 utils.load_external_settings("host_settings", globals())
 
