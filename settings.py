@@ -64,6 +64,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'remember_me_urls'
@@ -88,8 +89,14 @@ INSTALLED_APPS = (
     'south',
     'minerva',
     'user_management',
+    'debug_toolbar',
 )
 
 LOGIN_REDIRECT_URL = "/"
 AUTH_PROFILE_MODULE = "minerva.UserProfile"
+
+INTERNAL_IPS = ("127.0.0.1",)
+DEBUG_TOOLBAR_CONFIG = {
+    "INTERCEPT_REDIRECTS": False,
+}
 
