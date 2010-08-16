@@ -54,7 +54,6 @@
 
 form th, form td {
         border-color: #b7ca79;
-        line-height: 2.5em;
 }
 
 form th {
@@ -87,5 +86,9 @@ form table .errors {
 
 .errors li {
         list-style: none;
+}
+
+.error_field {
+	background: #faa;
 }
 
