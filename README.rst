@@ -83,6 +83,12 @@ for this set of apps are
 
 If you already have those installed, there's nothing else that needs to be done.
 
+Latest source
+--------------
+
+The main source repository for this code is at Github:
+http://github.com/malcolmt/remember_me
+
 TODO
 =====
 
@@ -90,6 +96,11 @@ Obviously for something initially developed with about 20 hours of work spread
 over a couple of days, there are a lot of possibilities that we haven't had
 time to implement. These are noted here for our own future development efforts
 and in case people are interested.
+
+There is also a list of more concrete problems in the `issue tracker`_ at
+Github.
+
+.. _issue tracker: http://github.com/malcolmt/remember_me/issues
 
 Registration
 -------------
