@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load form_utils %}
 
 {% block content %}
 {% if prev_word %}
@@ -9,12 +10,13 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    <p><strong>Question:</strong> {{ question }}</p>               
-    {{ form.answer.errors }}
-    {{ form.answer }}
-    {{ form.meta.errors }}
-    {{ form.meta }}
-    <input type="submit" value="Submit" />
+    <table>
+        <tr><th></th><td class="centered">{{ question }}</td></tr>
+        {% form_layout form %}
+        <tr class="button_row"><td></td>
+            <td><input type="submit" value="Submit" /></td><td></td>
+        </tr>
+    </table>
 </form>
 {% endblock %}
 

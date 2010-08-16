@@ -3,6 +3,7 @@ import os
 from django.conf import settings
 from django.conf.urls.defaults import *  # pylint: disable-msg=W0401,W0614
 from django.contrib import admin
+from django.views.generic.simple import direct_to_template
 from django.views.static import serve
 
 import minerva.urls
@@ -16,6 +17,10 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'', include(minerva.urls)),
     (r'', include(user_management.urls)),
+    url("about/$", direct_to_template,
+        {"template": "fixme_placeholder.html"}, name="about"),
+    url("tech/$", direct_to_template,
+        {"template": "fixme_placeholder.html"}, name="tech"),
 )
 
 if settings.DEV_MODE:

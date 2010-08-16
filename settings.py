@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'minerva',
     'user_management',
     'debug_toolbar',
+    'general',
 )
 
 LOGIN_REDIRECT_URL = "/"

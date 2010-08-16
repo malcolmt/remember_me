@@ -13,8 +13,9 @@ def validate_answer(request, query_base):
     query = dict(query_base)
     form = QuestionForm(request.POST)
     if not form.is_valid():
-        # FIXME: Hmm ... form tampering?! Anything legit? What to do?
-        raise Exception(form.errors)
+        # Either form-tampering or submitting without data. In either case,
+        # we'll just ignore it and generate a new question.
+        return {}
     data = form.cleaned_data
     word = Word.objects.get(id=data["meta"][0])
 

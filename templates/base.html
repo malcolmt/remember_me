@@ -3,15 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>{% block title %}Minerva{% endblock %}</title>
+        <link rel="stylesheet" href="{{MEDIA_URL}}css/reset-fonts-grids.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="{{MEDIA_URL}}css/base-min.css" type="text/css" media="screen, projection" />
         <link rel="stylesheet" href="{{MEDIA_URL}}css/style.layout.css" type="text/css" media="screen, projection" />
-        <link type="text/css" href="{{MEDIA_URL}}css/smoothness/jquery-ui-1.8.4.custom.css" rel="stylesheet" /> 
         <script type="text/javascript" src="{{MEDIA_URL}}js/jquery-1.4.2.min.js"></script>
-        <script type="text/javascript" src="{{MEDIA_URL}}js/jquery-ui-1.8.4.custom.min.js"></script>
         <script type="text/javascript" src="{{MEDIA_URL}}js/login.js"></script>
     </head>
 
     <body>
-        <div id="wrapper">
+        <div id="doc3">
             <div id="header">
                 {% block header %}
                 <h1>Minerva: Foreign language vocabulary training</h1>
@@ -27,12 +27,13 @@
                 {% endblock %}
             </div>
 
-            <div id="content">
+            <div id="content" class="center">
                 {% block content %}{% endblock %}
-            </div><!-- #content -->
+            </div>
 
             <div id="footer">
-               <strong>Footer:</strong> FIXME
+                <p><a href="{% url about %}">About</a> |
+                   <a href="{% url tech %}">Tech</a></p>
             </div><!-- #footer -->
         </div><!-- #wrapper -->
     </body>

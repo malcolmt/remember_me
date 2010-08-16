@@ -1,10 +1,14 @@
 from django import forms as dj_forms
+
+from general import form_helpers
 from minerva.models import UserProfile, Language
 
 class QuestionForm(dj_forms.Form):
     meta = dj_forms.CharField(widget=dj_forms.HiddenInput)
-    answer = dj_forms.ChoiceField(choices=((False, 'False'), (True, 'True')),
-            widget=dj_forms.RadioSelect)
+    answer = dj_forms.ChoiceField(label="Meaning?", choices=(),
+            widget=dj_forms.RadioSelect(
+                renderer=form_helpers.RadioFieldRenderer,
+                attrs={"render_class": "multichoice"}))
 
     def __init__(self, *args, **kwargs):
         question = kwargs.pop("question", None)

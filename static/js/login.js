@@ -1,15 +1,15 @@
 function show_login_form() {
-	$("#login-form").show("blind", {}, 500);
+	$("#login-form").show("fast");
 	return false;
 }
 
 function hide_login_form() {
-	$("#login-form:visible").hide("blind");
+	$("#login-form:visible").removeClass("active").hide("slow");
 }
 
 function cancel_login() {
-	$("#login-form:visible").hide("blind");
-    return false;
+	$("#login-form:visible").removeClass("active").hide("slow");
+	return false;
 }
 
 function login_setup() {

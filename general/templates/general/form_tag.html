@@ -1,0 +1,15 @@
+{% if form.non_field_errors %}<tr>
+    <td colspan="3" class="errors">{{ form.non_field_errors }}</td>
+</tr>{% endif %}
+{% for field in form.visible_fields %}<tr>
+    <th>{% if show_required and field.field.required and field.field.widget.input_type %}
+        <span class="required">(*)</span>{% endif %}
+        {{ field.label }}</th>
+    <td {% if field.errors %}class="error_field"{% endif %}>{{ field }}
+        {% if forloop.first %}
+        <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+        {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+        {% endif %}</td>
+    <td class="errors">{{ field.errors }}</td>
+</tr>{% endfor %}
+
