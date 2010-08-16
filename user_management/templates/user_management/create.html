@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load form_utils %}
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    <table>
-    {{ user_create_form }}
-    {{ user_profile_form }}
-    <tr><td></td><td><input type="submit" value="Create User" /></td></tr>
+    <table>{% form_layout user_create_form %}{% form_layout user_profile_form %}
+        <tr class="button_row"><td></td>
+            <td><input type="submit" value="Create User" /></td>
+        </tr>
     </table>
 </form>
 {% endblock %}

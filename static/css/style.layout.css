@@ -49,3 +49,43 @@
    background: #BFF08E;
    text-align: center;
 }
+
+/* Form styling */
+
+form th, form td {
+        border-color: #b7ca79;
+        line-height: 2.5em;
+}
+
+form th {
+        padding-left: 1em;
+        padding-right: 1em;
+        background-color: #b7ca79;
+        color: #333;
+        text-align: right;
+}
+
+.button_row td {
+        border-width: 0;
+        text-align: right;
+}
+
+.required {
+        color: #f00;
+        font-weight: bold;
+}
+
+form table .errors {
+        border: none;
+        color: #f00;
+        font-weight: bold;
+}
+
+.errors ul {
+        margin: 0;
+}
+
+.errors li {
+        list-style: none;
+}
+
