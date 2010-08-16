@@ -2,10 +2,11 @@
 <form id="login-form" {% if hidden %}class="hidden"{% endif %} action="{% url login %}" method="post">
     <p><a href="{% url signup %}">Sign up as a new user</a></p>
     <table>{% form_layout form %}
-        <tr><td></td>
-            <td><input type="submit" value="Login" /></td>
-            <td><a id="login-cancel" href="{% url question-page %}">Cancel</a>
+        <tr class="button_row"><td></td>
+            <td><input type="submit" value="Login" />
+                <a id="login-cancel" href="{% url question-page %}">Cancel</a>
             </td>
+            <td></td>
         </tr>
     </table>
 </form>
