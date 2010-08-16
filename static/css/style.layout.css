@@ -55,7 +55,7 @@ input {
 #header {
    padding-top: 2em;
    padding-bottom: 1em;
-	background: #FFE680;
+   background: #FFE680;
    text-align: center;
 }
 
@@ -88,5 +88,6 @@ input {
 #footer {
    padding-top: 1em;
    padding-bottom: 1em;
-	background: #BFF08E;
+   background: #BFF08E;
+   text-align: center;
 }
