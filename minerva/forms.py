@@ -48,7 +48,9 @@ class UserProfileForm(forms.Form):
     language = forms.ChoiceField(required=False)
 
     def __init__(self, *args, **kwargs):
+        language = kwargs.pop("language", None)
         super(UserProfileForm, self).__init__(*args, **kwargs)
         self.fields["language"].choices = ([("", "<No preference>")] +
                 list(Language.objects.values_list("code", "descriptive_name")))
+        self.fields['language'].initial = language
 

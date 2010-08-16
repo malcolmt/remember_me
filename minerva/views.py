@@ -2,8 +2,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from minerva.questions import create_question_complex, process_answer
-from minerva.models import Progress, Word
-from minerva.forms import QuestionForm
+from minerva.models import Progress, Word, UserProfile, SessionProgress
+from minerva.forms import QuestionForm, UserProfileForm
 
 def validate_answer(request, query_base):
     """
@@ -43,8 +43,10 @@ def question(request):
     query= {}
     if request.user.is_authenticated():
         query['student'] = request.user
+        language = str(UserProfile.objects.get(student = request.user).language)
     else:
         query['anon_student'] = request.session.session_key
+        language = request.session.get('language', 'zho')
 
     if request.method == 'POST':
         result = validate_answer(request, query)
@@ -54,7 +56,7 @@ def question(request):
     #   - a way to select a language.
     #   - a way to select difficulty level.
     #   - ...
-    problem, answers = create_question_complex(query, "zho", 1, context.get('prev_id', None))
+    problem, answers = create_question_complex(query, language, 1, context.get('prev_id', None))
     form = QuestionForm(question=problem, answers = answers)
     context['question'] = problem[1]
     context['form'] = form
@@ -62,14 +64,41 @@ def question(request):
             RequestContext(request))
 
 def statistics(request):
-    context = {}
+    
     query = {}
     if request.user.is_authenticated():
         query['student'] = request.user
     else:
         query['anon_student'] = request.session.session_key
+
+    if request.method == 'POST':
+        user_profile_form = UserProfileForm(request.POST)
+        if user_profile_form.is_valid():
+            language = user_profile_form.cleaned_data['language']
+            changed = False
+            if request.user.is_authenticated():
+                profile = UserProfile.objects.get(student=request.user)
+                changed = profile.language != language
+                profile.language = language
+                profile.save()
+            else:
+                changed = request.session.get('language', '') != language
+                request.session['language'] = language
+            # clear the session progress, if our language has changed
+            if changed:
+                SessionProgress.objects.filter(**query).delete()
+    else:
+        # FIXME - move the setting of the language to the cont
+        if request.user.is_authenticated():
+            profile = UserProfile.objects.get(student=request.user)
+            language = profile.language
+        else:
+            language = request.session.get('language', '')
+        user_profile_form = UserProfileForm(language = language)
+    context = {}
     progress = Progress.objects.filter(**query).order_by('correct').reverse()
     context['progress'] = progress
+    context['user_profile_form'] = user_profile_form
     return render_to_response('minerva/statistics.html', context,
             RequestContext(request))
 
