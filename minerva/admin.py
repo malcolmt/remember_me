@@ -16,8 +16,13 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_display = ("student", "language")
     list_filter = ["language"]
 
+class SessionProgressAdmin(admin.ModelAdmin):
+    list_display = ("student_string", "word", "weight", "correct")
+    list_filter = ["student"]
+
 admin.site.register(models.Word, WordAdmin)
 admin.site.register(models.Progress, ProgressAdmin)
 admin.site.register(models.UserProfile, UserProfileAdmin)
+admin.site.register(models.SessionProgress, SessionProgressAdmin)
 admin.site.register(models.Language)
 
