@@ -1,0 +1,6 @@
+The three participants in The Three Blind Mice team for Django Dash 2010 were
+
+Matthew Stevens
+Ying Stevens
+Malcolm Tredinnick
+
