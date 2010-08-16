@@ -1,12 +1,12 @@
-from django import forms as dj_forms
+from django import forms
 
 from general import form_helpers
 from minerva.models import UserProfile, Language
 
-class QuestionForm(dj_forms.Form):
-    meta = dj_forms.CharField(widget=dj_forms.HiddenInput)
-    answer = dj_forms.ChoiceField(label="Meaning?", choices=(),
-            widget=dj_forms.RadioSelect(
+class QuestionForm(forms.Form):
+    meta = forms.CharField(widget=forms.HiddenInput)
+    answer = forms.ChoiceField(label="Meaning?", choices=(),
+            widget=forms.RadioSelect(
                 renderer=form_helpers.RadioFieldRenderer,
                 attrs={"render_class": "multichoice"}))
 
@@ -44,13 +44,11 @@ class QuestionForm(dj_forms.Form):
         data = [int(i) for i in packed_data.split("|")]
         return data[0], data[1:]
 
-class UserProfileForm(dj_forms.ModelForm):
-    class Meta:
-        model=UserProfile
-        exclude = ('student', )
+class UserProfileForm(forms.Form):
+    language = forms.ChoiceField(required=False)
 
-    def clean_language(self):
-        data = self.cleaned_data['language']
-        if data not in Language.objects.values_list("code", flat=True):
-            raise dj_forms.ValidationError("language %s is not supported" % data)
-        return data
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields["language"].choices = ([("", "<No preference>")] +
+                list(Language.objects.values_list("code", "descriptive_name")))
+
