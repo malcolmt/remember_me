@@ -5,6 +5,10 @@
 	margin-bottom: 1em;
 }
 
+.centered {
+	text-align: center;
+}
+
 #wrapper {
 	width: 1000px;
 	margin: 0 auto;
@@ -72,6 +76,11 @@ form th {
 .required {
         color: #f00;
         font-weight: bold;
+}
+
+.multichoice li {
+	list-style: none;
+	line-height: 2em;
 }
 
 form table .errors {
