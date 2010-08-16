@@ -1,32 +1,9 @@
-/*
-* {
-	margin: 0;
-	padding: 0;
+.center {
+	margin-left: 25%;
+	margin-right: 25%;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
-body {
-	font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
-	width: 100%;
-}
-a {
-	color: blue;
-	outline: none;
-	text-decoration: underline;
-}
-a:hover {
-	text-decoration: none;
-}
-
-p {
-	margin: 0 0 18px
-}
-img {
-	border: none;
-}
-input {
-	vertical-align: middle;
-}
-
-        */
 
 #wrapper {
 	width: 1000px;
@@ -54,11 +31,8 @@ input {
 }
 
 
-/* Header
------------------------------------------------------------------------------*/
 #header {
-   padding-top: 2em;
-   padding-bottom: 1em;
+   padding: 1em;
    background: #FFE680;
    text-align: center;
 }
@@ -69,26 +43,6 @@ input {
 }
 
 
-/* Middle
------------------------------------------------------------------------------*/
-#content {
-    margin: 1em 1em 2em 1em;
-}
-
-#content ul {
-    padding-left: 5em;
-}
-
-#content li {
-    list-style: none;
-}
-
-#content input {
-    margin-right: 1em;
-}
-
-/* Footer
------------------------------------------------------------------------------*/
 #footer {
    padding-top: 1em;
    padding-bottom: 1em;
