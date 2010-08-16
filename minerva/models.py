@@ -52,6 +52,13 @@ class SessionProgress(models.Model):
     weight = models.IntegerField(default=0) # default weight of zero, we should check out this word!!
     correct = models.IntegerField(default=0)
 
+    def student_string(self):
+        if self.is_anonymous():
+            return u"Anon: %s" % self.anon_student
+        else:
+            return unicode(self.student)
+    student_string.short_description = "student" # pylint: disable-msg=W0612
+
 class Progress(models.Model):
     """
     Tracking historical progress for a particular user on a word.
