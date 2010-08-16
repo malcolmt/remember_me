@@ -14,7 +14,7 @@ QUESTION_SCENARIOS = (
     ('meaning', 'word'),
 )
 
-def get_available_words(query, language, level):
+def get_available_words(query, language, level, last_question):
     available_words = SessionProgress.objects.filter(**query)
     if len(available_words) < 10:
         num_required = 5 - len(available_words)
@@ -25,10 +25,13 @@ def get_available_words(query, language, level):
         # remove duplicate words from our candidates
         selected = sampled_words - current_words
         for i in selected:
-            query["word"] = i
-            new_entry = SessionProgress.objects.create(**query)
+            new_word = dict(query)
+            new_word["word"] = i
+            new_entry = SessionProgress.objects.create(**new_word)
         available_words = SessionProgress.objects.filter(**query)
-
+    if last_question:
+        last_word = Word.objects.get(id=last_question)
+        available_words = available_words.exclude(word=last_word)
     return available_words.order_by("weight")
 
 def decrement_weight(progress):
@@ -44,17 +47,17 @@ def decrement_weight(progress):
         progress.weight -= delta
     progress.save()
 
-def process_answer(query, data):
+def process_answer(query_base, data):
     # FIXME - big assumption here, that the progress object exists
     correct_answer = data['meta'][0]
-    q = dict(query)
-    q['word'] = correct_answer
-    progress_on_correct_answer = SessionProgress.objects.get(**q)
+    query = dict(query_base)
+    query['word'] = correct_answer
+    progress_on_correct_answer = SessionProgress.objects.get(**query)
     if int(correct_answer) != int(data['answer']):
         # data['answer'] is the selected answer
         # Relax the weights because we got them wrong, we want to be more likely to select it next time
-        q['word'] = data['answer']
-        progress_on_incorrect_select = SessionProgress.objects.get(**q)
+        query['word'] = data['answer']
+        progress_on_incorrect_select = SessionProgress.objects.get(**query)
         decrement_weight(progress_on_correct_answer)
         decrement_weight(progress_on_incorrect_select)
     else:
@@ -66,14 +69,10 @@ def process_answer(query, data):
             progress_on_correct_answer.weight += 10 + (10 * random.random())
             progress_on_correct_answer.save()
 
-def create_question_complex(request, language, level, num_choices=4):
+def create_question_complex(query_base, language, level, last_question, num_choices=4):
     # get word with lowest weight, fill session with more words if necessary
-    query = {}
-    if request.user.is_authenticated():
-        query['student'] = request.user
-    else:
-        query['anon_student'] = request.session.session_key
-    available_words = get_available_words(query, language, level)
+    query = dict(query_base)
+    available_words = get_available_words(query, language, level, last_question)
     query['language'] = language
     next_word = available_words[0]
     possible_answers = random.sample(available_words[1:], num_choices - 1) + [next_word]
