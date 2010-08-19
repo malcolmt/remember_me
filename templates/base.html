@@ -17,10 +17,10 @@
                 <h1>Minerva: Foreign language vocabulary training</h1>
                 <div class="tools">
                 {% if user.is_authenticated %}
-                <p>Hello {{ user }} | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a> |
+                <p>Hello {{ user }} | <a href="{% url question-page %}">Questions</a> | <a href="{% url status %}">Status</a> |
                 <a href="{% url logout %}">Logout</a></p>
                 {% else %}
-                <p><a id="login-link" href="{% url login %}">Login / Join</a> | <a href="{% url question-page %}">Questions</a> | <a href="{% url stats %}">Status</a></p>
+                <p><a id="login-link" href="{% url login %}">Login / Join</a> | <a href="{% url question-page %}">Questions</a> | <a href="{% url status %}">Status</a></p>
                 {% login_form %}
                 {% endif %}
                 </div>&nbsp;

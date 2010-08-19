@@ -63,8 +63,7 @@ def question(request):
     return render_to_response('minerva/question.html', context,
             RequestContext(request))
 
-def statistics(request):
-    
+def status(request):
     query = {}
     if request.user.is_authenticated():
         query['student'] = request.user
