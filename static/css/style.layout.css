@@ -44,6 +44,17 @@
 .tools {
     float: right;
     padding-right: 1em;
+    position: relative;
+}
+
+#login-form {
+	padding: 1em 0.5em 0;
+	margin: 0 -1em 0 0;
+	position: absolute;
+	top: 2em;
+	right: 0;
+	border: 2px solid #ffe680;
+	background: white;
 }
 
 
