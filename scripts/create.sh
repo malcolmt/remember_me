@@ -9,5 +9,5 @@ fi
 SCRIPT_DIR=$(dirname $0)
 
 echo "Creating and populating virtual environment. Please wait..."
-pip install -E $1 -r $SCRIPT_DIR/requirements.txt
+pip install -E $1 -I -r $SCRIPT_DIR/requirements.txt
 
