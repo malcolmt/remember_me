@@ -95,7 +95,7 @@ class Profile(models.Model):
     language = models.CharField(max_length=3, null=True, blank=True)
 
     def __unicode__(self):
-        return u"%s (lang: %s)" % (self.student, self.language)
+        return u"%s (lang: %s)" % (self.user, self.language)
 
 models.signals.post_save.connect(signal_handlers.create_user_profile,
         sender=a_models.User)
