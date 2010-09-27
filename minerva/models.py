@@ -92,10 +92,10 @@ class Profile(models.Model):
     Tracking user specific settings
     """
     user = models.OneToOneField(a_models.User, primary_key=True)
-    language = models.CharField(max_length=3, null=True, blank=True)
+    language_pref = models.ForeignKey(Language, null=True, blank=True)
 
     def __unicode__(self):
-        return u"%s (lang: %s)" % (self.user, self.language)
+        return u"%s (lang: %s)" % (self.user, self.language_pref)
 
 models.signals.post_save.connect(signal_handlers.create_user_profile,
         sender=a_models.User)

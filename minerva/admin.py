@@ -13,8 +13,8 @@ class ProgressAdmin(admin.ModelAdmin):
     list_filter = ["student"]
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "language")
-    list_filter = ["language"]
+    list_display = ("user", "language_pref")
+    list_filter = ["language_pref"]
 
 class SessionProgressAdmin(admin.ModelAdmin):
     list_display = ("student_string", "word", "weight", "correct")
