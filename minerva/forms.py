@@ -1,7 +1,7 @@
 from django import forms
 
 from general import form_helpers
-from minerva.models import UserProfile, Language
+from minerva.models import Profile, Language
 
 class QuestionForm(forms.Form):
     meta = forms.CharField(widget=forms.HiddenInput)
@@ -44,12 +44,12 @@ class QuestionForm(forms.Form):
         data = [int(i) for i in packed_data.split("|")]
         return data[0], data[1:]
 
-class UserProfileForm(forms.Form):
+class ProfileForm(forms.Form):
     language = forms.ChoiceField(required=False)
 
     def __init__(self, *args, **kwargs):
         language = kwargs.pop("language", None)
-        super(UserProfileForm, self).__init__(*args, **kwargs)
+        super(ProfileForm, self).__init__(*args, **kwargs)
         self.fields["language"].choices = ([("", "<No preference>")] +
                 list(Language.objects.values_list("code", "descriptive_name")))
         self.fields['language'].initial = language

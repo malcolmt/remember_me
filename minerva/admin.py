@@ -12,8 +12,8 @@ class ProgressAdmin(admin.ModelAdmin):
     # TODO: Make a column that is "correct / attempts" for readability.
     list_filter = ["student"]
 
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ("student", "language")
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ("user", "language")
     list_filter = ["language"]
 
 class SessionProgressAdmin(admin.ModelAdmin):
@@ -22,7 +22,7 @@ class SessionProgressAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Word, WordAdmin)
 admin.site.register(models.Progress, ProgressAdmin)
-admin.site.register(models.UserProfile, UserProfileAdmin)
+admin.site.register(models.Profile, ProfileAdmin)
 admin.site.register(models.SessionProgress, SessionProgressAdmin)
 admin.site.register(models.Language)
 

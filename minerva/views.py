@@ -2,8 +2,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from minerva.questions import create_question_complex, process_answer
-from minerva.models import Progress, Word, UserProfile, SessionProgress
-from minerva.forms import QuestionForm, UserProfileForm
+from minerva.models import Progress, Word, Profile, SessionProgress
+from minerva.forms import QuestionForm, ProfileForm
 
 def validate_answer(request, query_base):
     """
@@ -43,7 +43,7 @@ def question(request):
     query= {}
     if request.user.is_authenticated():
         query['student'] = request.user
-        language = str(UserProfile.objects.get(student = request.user).language)
+        language = str(Profile.objects.get(user=request.user).language)
     else:
         query['anon_student'] = request.session.session_key
         language = request.session.get('language', 'zho')
@@ -71,12 +71,12 @@ def status(request):
         query['anon_student'] = request.session.session_key
 
     if request.method == 'POST':
-        user_profile_form = UserProfileForm(request.POST)
+        user_profile_form = ProfileForm(request.POST)
         if user_profile_form.is_valid():
             language = user_profile_form.cleaned_data['language']
             changed = False
             if request.user.is_authenticated():
-                profile = UserProfile.objects.get(student=request.user)
+                profile = Profile.objects.get(user=request.user)
                 changed = profile.language != language
                 profile.language = language
                 profile.save()
@@ -89,11 +89,11 @@ def status(request):
     else:
         # FIXME - move the setting of the language to the cont
         if request.user.is_authenticated():
-            profile = UserProfile.objects.get(student=request.user)
+            profile = Profile.objects.get(user=request.user)
             language = profile.language
         else:
             language = request.session.get('language', '')
-        user_profile_form = UserProfileForm(language = language)
+        user_profile_form = ProfileForm(language = language)
     context = {}
     progress = Progress.objects.filter(**query).order_by('correct').reverse()
     context['progress'] = progress

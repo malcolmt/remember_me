@@ -87,11 +87,11 @@ class Progress(models.Model):
             return unicode(self.student)
     student_string.short_description = "student" # pylint: disable-msg=W0612
 
-class UserProfile(models.Model):
+class Profile(models.Model):
     """
     Tracking user specific settings
     """
-    student = models.OneToOneField(a_models.User, primary_key=True)
+    user = models.OneToOneField(a_models.User, primary_key=True)
     language = models.CharField(max_length=3, null=True, blank=True)
 
     def __unicode__(self):
@@ -99,3 +99,4 @@ class UserProfile(models.Model):
 
 models.signals.post_save.connect(signal_handlers.create_user_profile,
         sender=a_models.User)
+
