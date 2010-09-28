@@ -3,8 +3,6 @@ import random
 
 from django.conf import settings
 from django.core.cache import cache
-from django.db.models import Min
-
 from minerva.models import Word
 from minerva.models import SessionProgress
 
@@ -21,13 +19,14 @@ def get_available_words(query, language_id, level, last_question):
         pks = word_keys(language_id, level)
         current_words = set(available_words.values_list("word", flat=True))
         # Collisions should be infrequent, so we should be able to get surplus
-        sampled_words = set(Word.objects.filter(pk__in=random.sample(pks, num_required + 10)))
+        sampled_words = set(Word.objects.filter(
+                pk__in=random.sample(pks, num_required + 10)))
         # remove duplicate words from our candidates
         selected = sampled_words - current_words
         for i in selected:
             new_word = dict(query)
             new_word["word"] = i
-            new_entry = SessionProgress.objects.create(**new_word)
+            SessionProgress(**new_word).save()
         available_words = SessionProgress.objects.filter(**query)
     if last_question:
         last_word = Word.objects.get(id=last_question)
@@ -56,7 +55,8 @@ def process_answer(query_base, data):
     progress_on_correct_answer = SessionProgress.objects.get(**query)
     if int(correct_answer) != int(data['answer']):
         # data['answer'] is the selected answer
-        # Relax the weights because we got them wrong, we want to be more likely to select it next time
+        # Relax the weights because we got them wrong, we want to be more
+        # likely to select it next time.
         query['word'] = data['answer']
         progress_on_incorrect_select = SessionProgress.objects.get(**query)
         decrement_weight(progress_on_correct_answer)
@@ -64,7 +64,8 @@ def process_answer(query_base, data):
     else:
         progress_on_correct_answer.correct += 1
         if progress_on_correct_answer.correct > 5:
-            # we have seen this word enough times and answered correctly remove it from the fold
+            # We have seen this word enough times and answered correctly.
+            # Remove it from the fold.
             progress_on_correct_answer.delete()
         else:
             progress_on_correct_answer.weight += 10 + (10 * random.random())
@@ -78,12 +79,14 @@ def create_question_complex(query_base, language_id, level, last_question,
             last_question)
     #query['language'] = language_id
     next_word = available_words[0]
-    possible_answers = random.sample(available_words[1:], num_choices - 1) + [next_word]
+    possible_answers = (random.sample(available_words[1:], num_choices - 1)
+            + [next_word])
     random.shuffle(possible_answers)
     question_attribute, answer_attribute = random.choice(QUESTION_SCENARIOS)
     question_data = (
         [next_word.word.pk, getattr(next_word.word, question_attribute)],
-        [(word.word.pk, getattr(word.word, answer_attribute)) for word in possible_answers]
+        [(word.word.pk, getattr(word.word, answer_attribute))
+                for word in possible_answers]
     )
     return question_data
     #next_word = .aggregate(Min('weight'))

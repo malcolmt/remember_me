@@ -1,7 +1,7 @@
 from django import forms
 
 from general import form_helpers
-from minerva.models import Profile, Language
+from minerva.models import Language
 
 class QuestionForm(forms.Form):
     meta = forms.CharField(widget=forms.HiddenInput)

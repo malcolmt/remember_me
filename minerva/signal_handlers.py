@@ -4,6 +4,7 @@ def create_user_profile(sender, **kwargs):
     """
     Create an empty Profile whenever a new User is created.
     """
+    # pylint: disable-msg=W0613
     from minerva import models
     try:
         ContentType.objects.get_by_natural_key("minerva", "profile")

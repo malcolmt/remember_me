@@ -41,7 +41,7 @@ def validate_answer(request, query_base):
         
 def question(request):
     context = {}
-    query= {}
+    query = {}
     if request.user.is_authenticated():
         query['student'] = request.user
         language_id = Profile.objects.get(user=request.user).language_pref_id
