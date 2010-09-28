@@ -14,11 +14,11 @@ QUESTION_SCENARIOS = (
     ('meaning', 'word'),
 )
 
-def get_available_words(query, language, level, last_question):
+def get_available_words(query, language_id, level, last_question):
     available_words = SessionProgress.objects.filter(**query)
     if len(available_words) < 10:
         num_required = 5 - len(available_words)
-        pks = word_keys(language, level)
+        pks = word_keys(language_id, level)
         current_words = set(available_words.values_list("word", flat=True))
         # Collisions should be infrequent, so we should be able to get surplus
         sampled_words = set(Word.objects.filter(pk__in=random.sample(pks, num_required + 10)))
@@ -36,7 +36,8 @@ def get_available_words(query, language, level, last_question):
 
 def decrement_weight(progress):
     if progress.weight <= 0:
-        # if progress is zero we don't want to see this one again, so secretly increment
+        # if progress is zero we don't want to see this one again, so secretly
+        # increment.
         progress.weight += 5
         progress.save()
         return
@@ -69,11 +70,13 @@ def process_answer(query_base, data):
             progress_on_correct_answer.weight += 10 + (10 * random.random())
             progress_on_correct_answer.save()
 
-def create_question_complex(query_base, language, level, last_question, num_choices=4):
+def create_question_complex(query_base, language_id, level, last_question,
+        num_choices=4):
     # get word with lowest weight, fill session with more words if necessary
     query = dict(query_base)
-    available_words = get_available_words(query, language, level, last_question)
-    query['language'] = language
+    available_words = get_available_words(query, language_id, level,
+            last_question)
+    #query['language'] = language_id
     next_word = available_words[0]
     possible_answers = random.sample(available_words[1:], num_choices - 1) + [next_word]
     random.shuffle(possible_answers)
@@ -110,7 +113,7 @@ def create_question(user, language, level, num_choices=4):
             for item in sampled_words]
     return question_data, answers
 
-def word_keys(code, level):
+def word_keys(lang_id, level):
     """
     Retrieves all the pk values for words for the language "code" and "level".
     This interacts sensibly with the cache system to avoid unnecessary database
@@ -118,11 +121,11 @@ def word_keys(code, level):
 
     Returns a list of pk values.
     """
-    full_list = cache.get(code)
+    full_list = cache.get(lang_id)
     if not full_list:
-        full_list = tuple(Word.objects.filter(lang_code__code=code). \
+        full_list = tuple(Word.objects.filter(lang_code__id=lang_id). \
                 values_list("level", "pk").order_by("level"))
-        cache.set(code, full_list, settings.LANG_CACHE_TIMEOUT)
+        cache.set(lang_id, full_list, settings.LANG_CACHE_TIMEOUT)
     start = bisect.bisect_right(full_list, (level - 1, 0))
     end = bisect.bisect_left(full_list, (level + 1, 0))
     return [item[1] for item in full_list[start : end]]

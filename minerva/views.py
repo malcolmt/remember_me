@@ -7,9 +7,10 @@ from minerva.forms import QuestionForm, ProfileForm
 
 def validate_answer(request, query_base):
     """
-    For now just update the correct answer with the data
-    FIXME - how do I get a question form to validate across fields and against the db
+    For now, just update the correct answer with the data.
     """
+    # FIXME - how do I get a question form to validate across fields and
+    # against the db?
     query = dict(query_base)
     form = QuestionForm(request.POST)
     if not form.is_valid():
@@ -43,10 +44,10 @@ def question(request):
     query= {}
     if request.user.is_authenticated():
         query['student'] = request.user
-        language = str(Profile.objects.get(user=request.user).language)
+        language_id = str(Profile.objects.get(user=request.user).language_pref)
     else:
         query['anon_student'] = request.session.session_key
-        language = request.session.get('language', 'zho')
+        language_id = request.session.get('language_id', '1')
 
     if request.method == 'POST':
         result = validate_answer(request, query)
@@ -56,7 +57,8 @@ def question(request):
     #   - a way to select a language.
     #   - a way to select difficulty level.
     #   - ...
-    problem, answers = create_question_complex(query, language, 1, context.get('prev_id', None))
+    problem, answers = create_question_complex(query, language_id, 1,
+            context.get('prev_id', None))
     form = QuestionForm(question=problem, answers = answers)
     context['question'] = problem[1]
     context['form'] = form
@@ -73,16 +75,16 @@ def status(request):
     if request.method == 'POST':
         user_profile_form = ProfileForm(request.POST)
         if user_profile_form.is_valid():
-            language = user_profile_form.cleaned_data['language']
+            language_id = user_profile_form.cleaned_data['language']
             changed = False
             if request.user.is_authenticated():
                 profile = Profile.objects.get(user=request.user)
-                changed = profile.language != language
-                profile.language = language
+                changed = profile.language_pref_id != language_id
+                profile.language_pref_id = language_id
                 profile.save()
             else:
-                changed = request.session.get('language', '') != language
-                request.session['language'] = language
+                changed = request.session.get('language_id') != language_id
+                request.session['language_id'] = language_id
             # clear the session progress, if our language has changed
             if changed:
                 SessionProgress.objects.filter(**query).delete()
@@ -90,12 +92,12 @@ def status(request):
         # FIXME - move the setting of the language to the cont
         if request.user.is_authenticated():
             profile = Profile.objects.get(user=request.user)
-            language = profile.language
+            language_id = profile.language_pref_id
         else:
-            language = request.session.get('language', '')
-        user_profile_form = ProfileForm(language = language)
+            language_id = request.session.get('language_id', '')
+        user_profile_form = ProfileForm(language=language_id)
     context = {}
-    progress = Progress.objects.filter(**query).order_by('correct').reverse()
+    progress = Progress.objects.filter(**query).order_by('-correct')
     context['progress'] = progress
     context['user_profile_form'] = user_profile_form
     return render_to_response('minerva/statistics.html', context,

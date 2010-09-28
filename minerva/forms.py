@@ -51,6 +51,6 @@ class ProfileForm(forms.Form):
         language = kwargs.pop("language", None)
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.fields["language"].choices = ([("", "<No preference>")] +
-                list(Language.objects.values_list("code", "descriptive_name")))
+                list(Language.objects.values_list("id", "descriptive_name")))
         self.fields['language'].initial = language
 
