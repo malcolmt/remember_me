@@ -44,10 +44,12 @@ def question(request):
     query= {}
     if request.user.is_authenticated():
         query['student'] = request.user
-        language_id = str(Profile.objects.get(user=request.user).language_pref)
+        language_id = Profile.objects.get(user=request.user).language_pref_id
+        if language_id is None:
+            language_id = 1
     else:
         query['anon_student'] = request.session.session_key
-        language_id = request.session.get('language_id', '1')
+        language_id = request.session.get('language_id', 1)
 
     if request.method == 'POST':
         result = validate_answer(request, query)
