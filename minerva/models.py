@@ -31,9 +31,6 @@ class Word(models.Model):
 
     objects = WordManager()
 
-    class Meta:
-        unique_together = ("word", "lang_code")
-
     def __unicode__(self):
         return u"%s (%s)" % (self.word, self.meaning)
 

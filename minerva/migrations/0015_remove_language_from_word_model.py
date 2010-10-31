@@ -7,33 +7,19 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Removing unique constraint on 'Word', fields ['word', 'language']
-        db.delete_unique('minerva_word', ['word', 'language'])
-
         # Deleting field 'Word.language'
         db.delete_column('minerva_word', 'language')
 
         # Changing field 'Word.lang_code'
         db.alter_column('minerva_word', 'lang_code_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['minerva.Language']))
 
-        # Adding unique constraint on 'Word', fields ['lang_code', 'word']
-        db.create_unique('minerva_word', ['lang_code_id', 'word'])
-
 
     def backwards(self, orm):
-        
-        # Removing unique constraint on 'Word', fields ['lang_code', 'word']
-        db.delete_unique('minerva_word', ['lang_code_id', 'word'])
-
         # Adding field 'Word.language'
         db.add_column('minerva_word', 'language', self.gf('django.db.models.fields.CharField')(default=1, max_length=3), keep_default=False)
 
         # Changing field 'Word.lang_code'
         db.alter_column('minerva_word', 'lang_code_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['minerva.Language'], null=True))
-
-        # Adding unique constraint on 'Word', fields ['word', 'language']
-        db.create_unique('minerva_word', ['word', 'language'])
 
 
     models = {
